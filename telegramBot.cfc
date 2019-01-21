@@ -33,8 +33,6 @@ component accessors="true" {
   }
 
   public function dataParse(required data){
-    request.debugLog(serializeJSON(data));
-
     if(NOT structKeyExists(data, "content")){
       throw(type="Application", message="Request incorrect (content is required)");
     }   
@@ -80,7 +78,6 @@ component accessors="true" {
       ret["inline_query_id"] = contentStruct.inline_query.id;
       ret.user = contentStruct.inline_query.from;
     } else{
-      request.debugLog(serializeJSON(data));
       throw(type="Application", message="Request incorrect. From field undefined");
     }
 
@@ -105,7 +102,6 @@ component accessors="true" {
     }
 
     contentStruct["!parsed"] = ret;
-    request.debugLog(serializeJSON(contentStruct));
 
     return ret;
   }
