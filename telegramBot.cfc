@@ -21,7 +21,7 @@ component accessors="true" {
   * @setter true
   * @type string
   * @validate string
-  * @hint Telegram Bot API URI
+  * @hint Telegram Bot API URI (client)
   **/
   property name="apiUri" default="https://api.telegram.org/bot";
 
@@ -32,6 +32,9 @@ component accessors="true" {
     return this;
   }
 
+  /**
+  * @hint Parse http request to struct
+  **/
   public function dataParse(required data){
     if(NOT structKeyExists(data, "content")){
       throw(type="Application", message="Request incorrect (content is required)");
@@ -101,7 +104,8 @@ component accessors="true" {
       }
     }
 
-    contentStruct["!parsed"] = ret;
+    // for developer logging
+    //contentStruct["!parsed"] = ret;
 
     return ret;
   }
@@ -110,6 +114,7 @@ component accessors="true" {
     return call(method = "getMe");
   }
 
+  // to do list:
   // + getMe
   // + sendMessage
   // + Formatting options
@@ -236,7 +241,9 @@ component accessors="true" {
     return call(method = "answerCallbackQuery", params = arguments);
   }
 
-
+  /**
+  * @hint normalize file arguments to simple view (like standard structure with type (id, url, file))
+  **/
   private function normalizeArguments(args){
     for(argKey in args){
       if(structKeyExists(args, argKey)){
@@ -255,23 +262,16 @@ component accessors="true" {
     }
   }
 
-  private function photoMerge(args){
-    ArrayEach(["photo_id", "photo_url", "photo_path"], function(param){
-      if(structKeyExists(args, param)){
-        if(param == "photo_id" || param == "photo_url"){
-          args["photo"] = args[param];
-        } else{
-          args["photo"] = {type="file", file=args[param]};
-        }
-        structDelete(args, param);
-      }
-    });
-  }
-
+  /**
+  * @hint Make base URI for method
+  **/
   private function urlMake(required string method){
     return getApiUri() & arguments.method;
   }
 
+  /**
+  * @hint Helper. Remove all HTML tags
+  **/
   private struct function requestHttp(required string method, params = {}) {
     var url = urlMake(method = arguments.method);
     var httpService = new http();
@@ -280,7 +280,8 @@ component accessors="true" {
       return isDefined("value");
     });
 
-    httpService.setMethod( params.isEmpty() ? "get" : "post" );
+    //if params exist then set method as GET
+    httpService.setMethod( params.isEmpty() ? "GET" : "POST" );
     httpService.setUrl(url);
     for(paramKey in params){
       if(isStruct(params[paramKey]) && structKeyExists(params[paramKey], "httpparam") && structKeyExists(params[paramKey], "file") ){
@@ -297,6 +298,9 @@ component accessors="true" {
     return result;
   }
 
+  /**
+  * @hint API Call handler. Return responce as Struct
+  **/
   private any function call(required string method, struct params = {}){
     var result = requestHttp(argumentCollection = arguments);
     if(result.statusCode EQ "200 OK"){
@@ -307,24 +311,24 @@ component accessors="true" {
     return {};
   }
 
+  /**
+  * @hint API Responce converts to struct
+  **/
   private any function responce(required content){
     var responce = deserializeJSON(arguments.content);
     return (responce.ok ? responce.result : {});
   }
 
-  public string function stripHTML(str) {
-    // remove the whole tag and its content
-    var list = "style,script,noscript,br";
-    for (var tag in list){
-      str = reReplaceNoCase(str, "<s*(#tag#)[^>]*?>(.*?)","","all");
-    }
-
-    str = reReplaceNoCase(str, "<.*?>","","all");
+  /**
+  * @hint Helper. Remove all HTML tags
+  **/
+  public string function stripHTML(inputHTML) {
+    inputHTML = reReplaceNoCase(inputHTML, "<.*?>","","all");
     //get partial html in front
-    str = reReplaceNoCase(str, "^.*?>","");
+    inputHTML = reReplaceNoCase(inputHTML, "^.*?>","");
     //get partial html at end
-    str = reReplaceNoCase(str, "<.*$","");
+    inputHTML = reReplaceNoCase(inputHTML, "<.*$","");
 
-    return trim(str);
+    return trim(inputHTML);
   }
 }
