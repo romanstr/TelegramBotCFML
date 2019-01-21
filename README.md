@@ -7,7 +7,7 @@ This component allows you to call Telegram Bot API to your Coldfusion (CFML) app
 
 ## Examples
 
-```cfml
+```js
 var bot = new cfc.telegramBot(token = application.token);
 asked = bot.dataParse(data = httpData);
 if (asked.type == "command" && asked.command == "start") {
