@@ -115,24 +115,7 @@ component accessors="true" {
   }
 
   // to do list:
-  // + getMe
-  // + sendMessage
-  // + Formatting options
-  // + forwardMessage
-  // + sendPhoto
-  // + sendAudio
-  // + sendDocument
-  // + sendVideo
-  // sendAnimation
-  // sendVoice
-  // sendVideoNote
-  // sendMediaGroup
-  // sendLocation
-  // editMessageLiveLocation
-  // stopMessageLiveLocation
-  // sendVenue
-  // sendContact
-  // sendChatAction
+  // + sendChatAction
   // getUserProfilePhotos
   // getFile
   // kickChatMember
@@ -158,14 +141,24 @@ component accessors="true" {
   /**
   * @hint Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned. https://core.telegram.org/bots/api/#getupdates
   **/
-  public function getUpdates(integer offset, integer limit, integer timeout, array allowed_updates){
+  public function getUpdates(
+                integer offset, 
+                integer limit, 
+                integer timeout, 
+                array allowed_updates
+                ){
     return call(method = "getUpdates", params = arguments);
   }
 
   /**
   * @hint Use this method to specify a url and receive incoming updates via an outgoing webhook.
   **/
-  public function setWebhook(required string url, struct certificate, integer max_connections, array allowed_updates){
+  public function setWebhook(
+                required string url, 
+                struct certificate, 
+                integer max_connections, 
+                array allowed_updates
+                ){
     return call(method = "setWebhook", params = arguments);
   }
 
@@ -186,21 +179,42 @@ component accessors="true" {
   /**
   * @hint Use this method to send text messages. On success, the sent Message is returned.
   **/
-  public function sendMessage(integer chat_id, string text, string parse_mode, boolean disable_web_page_preview, boolean disable_notification, integer reply_to_message_id, reply_markup){
+  public function sendMessage(
+                integer chat_id, 
+                string text, 
+                string parse_mode, 
+                boolean disable_web_page_preview, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
     return call(method = "sendMessage", params = arguments);
   }
 
   /**
   * @hint Use this method to forward messages of any kind. On success, the sent Message is returned.
   **/
-  public function forwardMessage(required string chat_id, required string from_chat_id, boolean disable_notification, required integer message_id){
+  public function forwardMessage(
+                required string chat_id, 
+                required string from_chat_id, 
+                boolean disable_notification, 
+                required integer message_id
+                ){
     return call(method = "forwardMessage", params = arguments);
   }
   
   /**
   * @hint Use this method to send photos. On success, the sent Message is returned.
   **/
-  public function sendPhoto(required integer chat_id, required photo, string caption, string parse_mode, boolean disable_notification, integer reply_to_message_id, reply_markup){
+  public function sendPhoto(
+                required integer chat_id, 
+                required photo, 
+                string caption, 
+                string parse_mode, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
     normalizeArguments(args = arguments);
     return call(method = "sendPhoto", params = arguments);
   }
@@ -208,7 +222,19 @@ component accessors="true" {
   /**
   * @hint Use this method to send audio files
   **/
-  public function sendAudio(required integer chat_id, required audio, string caption, string parse_mode, integer duration, string performer, string title, thumb, boolean disable_notification, integer reply_to_message_id, reply_markup){
+  public function sendAudio(
+                required integer chat_id, 
+                required audio, 
+                string caption, 
+                string parse_mode, 
+                integer duration, 
+                string performer, 
+                string title, 
+                thumb, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
     normalizeArguments(args = arguments);
     return call(method = "sendAudio", params = arguments);
   }
@@ -216,7 +242,16 @@ component accessors="true" {
   /**
   * @hint Use this method to send general files
   **/
-  public function sendDocument(required integer chat_id, required document, thumb, string caption, string parse_mode, boolean disable_notification, integer reply_to_message_id, reply_markup){
+  public function sendDocument(
+                required integer chat_id, 
+                required document, 
+                thumb, 
+                string caption, 
+                string parse_mode, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
     normalizeArguments(args = arguments);
     return call(method = "sendDocument", params = arguments);
   }
@@ -224,9 +259,188 @@ component accessors="true" {
   /**
   * @hint Use this method to send video files
   **/
-  public function sendVideo(required integer chat_id, required video, integer duration, integer width, integer height, thumb, string caption, string parse_mode, boolean supports_streaming, boolean disable_notification, integer reply_to_message_id, reply_markup){
+  public function sendVideo(
+                required integer chat_id, 
+                required video, 
+                integer duration, 
+                integer width, 
+                integer height, 
+                thumb, 
+                string caption, 
+                string parse_mode, 
+                boolean supports_streaming, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
     normalizeArguments(args = arguments);
     return call(method = "sendVideo", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound).
+  **/
+  public function sendAnimation(
+                required integer chat_id, 
+                required animation, 
+                integer duration, 
+                integer width, 
+                integer height, 
+                thumb, 
+                string caption, 
+                string parse_mode, 
+                boolean supports_streaming, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    normalizeArguments(args = arguments);
+    return call(method = "sendAnimation", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message
+  **/
+  public function sendVoice(
+                required integer chat_id, 
+                required voice, 
+                string caption, 
+                string parse_mode, 
+                integer duration, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    normalizeArguments(args = arguments);
+    return call(method = "sendVoice", params = arguments);
+  }
+
+  /**
+  * @hint As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages.
+  **/
+  public function sendVideoNote(
+                required integer chat_id, 
+                required video_note, 
+                integer duration, 
+                integer length, 
+                thumb, 
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    normalizeArguments(args = arguments);
+    return call(method = "sendVideoNote", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send a group of photos or videos as an album
+  **/
+  public function sendMediaGroup(
+                required integer chat_id, 
+                required media, 
+                boolean disable_notification, 
+                integer reply_to_message_id
+                ){
+    normalizeArguments(args = arguments);
+    return call(method = "sendMediaGroup", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send point on the map
+  **/
+  public function sendLocation(
+                required integer chat_id, 
+                required decimal latitude, 
+                required decimal longitude,
+                integer live_period,
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    return call(method = "sendLocation", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to edit live location messages sent by the bot or via the bot (for inline bots)
+  **/
+  public function editMessageLiveLocation(
+                required integer chat_id,
+                integer message_id,
+                string inline_message_id,
+                required decimal latitude, 
+                required decimal longitude,
+                reply_markup
+                ){
+    return call(method = "editMessageLiveLocation", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires.
+  **/
+  public function stopMessageLiveLocation(
+                required integer chat_id,
+                integer message_id,
+                string inline_message_id,
+                reply_markup
+                ){
+    return call(method = "stopMessageLiveLocation", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send information about a venue
+  **/
+  public function sendVenue(
+                required integer chat_id,
+                required decimal latitude,
+                required decimal longitude,
+                required string title,
+                required string address,
+                string foursquare_id,
+                string foursquare_type,
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    return call(method = "sendVenue", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send phone contacts
+  **/
+  public function sendContact(
+                required integer chat_id,
+                required string phone_number,
+                required string first_name,
+                string last_name,
+                string vcard,
+                boolean disable_notification, 
+                integer reply_to_message_id, 
+                reply_markup
+                ){
+    return call(method = "sendContact", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to send phone contacts
+  * action - Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
+  **/
+  public function sendChatAction(
+                required integer chat_id,
+                required string action
+                ){
+
+    return call(method = "sendChatAction", params = arguments);
+  }
+
+  /**
+  * @hint Use this method to get a list of profile pictures for a user
+  **/
+  public function getUserProfilePhotos(
+                required integer user_id,
+                integer offset,
+                integer limit
+                ){
+    return call(method = "getUserProfilePhotos", params = arguments);
   }
 
   public function answerInlineQuery(required string inline_query_id, required results){
@@ -236,8 +450,14 @@ component accessors="true" {
   /**
   * @hint Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
   **/
-  public function answerCallbackQuery(required string callback_query_id, string text, boolean show_alert, string url, integer cache_time){
-    normalizeArguments(args = arguments);
+  public function answerCallbackQuery(
+                required string callback_query_id, 
+                string text, 
+                boolean show_alert, 
+                string url, 
+                integer cache_time
+                ){
+    //normalizeArguments(args = arguments);
     return call(method = "answerCallbackQuery", params = arguments);
   }
 
@@ -246,18 +466,27 @@ component accessors="true" {
   **/
   private function normalizeArguments(args){
     for(argKey in args){
-      if(structKeyExists(args, argKey)){
-        if( arrayFind(["photo", "audio", "document", "video"], lCase(argKey)) AND isStruct(args[argKey]) ){
-          if(args[argKey].type == "id" || args[argKey].type == "url"){
-            args[argKey] = args[argKey].value;
-          } else if(args[argKey].type == "file") {
-            args[argKey].file = args[argKey].value;
-            args[argKey].httpparam = "file";
-            structDelete(args[argKey], "value");
+      if( arrayFind(["photo", "audio", "document", "video", "animation", "video_note"], lCase(argKey)) AND isStruct(args[argKey]) ){
+        if(args[argKey].type == "id" || args[argKey].type == "url"){
+          args[argKey] = args[argKey].value;
+        } else if(args[argKey].type == "file") {
+          args[argKey].file = args[argKey].value;
+          args[argKey].httpparam = "file";
+          structDelete(args[argKey], "value");
+        }
+      } else if( lCase(argKey) == "media" ){
+        for( idxMedia in args[argKey] ){
+          if( structKeyExists(idxMedia, "mediaAttach") ){
+            var attachFileNameUnique = createUUID();
+            idxMedia["media"] = "attach://" & attachFileNameUnique;
+            args[attachFileNameUnique] = {
+                                      "type" = "file",
+                                      "name" = attachFileNameUnique, 
+                                      "file" = idxMedia.mediaAttach, 
+                                      "httpparam" = "file"};
+            structDelete(idxMedia, "mediaAttach");
           }
         }
-      } else {
-        structDelete(args, argKey);
       }
     }
   }
@@ -285,7 +514,11 @@ component accessors="true" {
     httpService.setUrl(url);
     for(paramKey in params){
       if(isStruct(params[paramKey]) && structKeyExists(params[paramKey], "httpparam") && structKeyExists(params[paramKey], "file") ){
-        httpService.addParam(type=params[paramKey].type, name=lCase(paramKey), file = params[paramKey].file );
+        //httparam argument for multipart/form-data under parameters. struct need elements: *file, *httparam=file, type, name
+        httpService.addParam(
+                          type = structKeyExists(params[paramKey], "type") ? params[paramKey].type : "file", 
+                          name = structKeyExists(params[paramKey], "name") ? params[paramKey].name : lCase(paramKey), 
+                          file = params[paramKey].file );
       }
       else if(isStruct(params[paramKey]) || isArray(params[paramKey]) ){
         httpService.addParam(type="formfield", name=lCase(paramKey), value = serializeJSON(params[paramKey]) );
@@ -294,7 +527,6 @@ component accessors="true" {
       }
     }
     var result = httpService.send().getPrefix();
-    //writeDump(result);
     return result;
   }
 
